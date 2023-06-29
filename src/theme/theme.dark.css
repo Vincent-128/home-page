@@ -1,0 +1,45 @@
+:root {
+  --background0: var(--variant10);
+  --background1: var(--variant20);
+  --background2: var(--variant25);
+  --background3: var(--variant30);
+  --background4: var(--variant35);
+  --background5: var(--variant40);
+
+  --primary0: var(--primary80);
+  --primary1: var(--primary70);
+  --primary2: var(--primary60);
+  --primary3: var(--primary50);
+  --primary4: var(--primary40);
+  --primary5: var(--primary35);
+
+  --secondary0: var(--secondary80);
+  --secondary1: var(--secondary70);
+  --secondary2: var(--secondary60);
+  --secondary3: var(--secondary50);
+  --secondary4: var(--secondary40);
+  --secondary5: var(--secondary35);
+
+  --tertiary0: var(--tertiary80);
+  --tertiary1: var(--tertiary70);
+  --tertiary2: var(--tertiary60);
+  --tertiary3: var(--tertiary50);
+  --tertiary4: var(--tertiary40);
+  --tertiary5: var(--tertiary35);
+
+  --variant0: var(--variant10);
+  --variant0: var(--variant20);
+  --variant0: var(--variant25);
+  --variant0: var(--variant30);
+  --variant0: var(--variant35);
+  --variant0: var(--variant40);
+
+  --error0: var(--error80);
+  --error1: var(--error70);
+  --error2: var(--error60);
+  --error3: var(--error50);
+  --error4: var(--error40);
+  --error5: var(--error35);
+
+  --text-background: #ffffff;
+}

@@ -1,0 +1,110 @@
+@font-face {
+  font-family: 'JetBrains';
+  src: url('fonts/JetBrainsMono-Regular.woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --primary0: #000000;
+  --primary10: #001946;
+  --primary20: #002c70;
+  --primary25: #003686;
+  --primary30: #00419d;
+  --primary35: #004cb5;
+  --primary40: #1358c7;
+  --primary50: #3a72e2;
+  --primary60: #598cfe;
+  --primary70: #87a9ff;
+  --primary80: #b1c5ff;
+  --primary90: #dae2ff;
+  --primary95: #eef0ff;
+  --primary98: #faf8ff;
+  --primary99: #fefbff;
+  --primary100: #ffffff;
+
+  --secondary0: #000000;
+  --secondary10: #271900;
+  --secondary20: #422d00;
+  --secondary25: #503700;
+  --secondary30: #5e4200;
+  --secondary35: #6d4c00;
+  --secondary40: #7c5800;
+  --secondary50: #9c6f00;
+  --secondary60: #bc8710;
+  --secondary70: #daa22f;
+  --secondary80: #f8bd49;
+  --secondary90: #ffdea8;
+  --secondary95: #ffeed8;
+  --secondary98: #fff8f3;
+  --secondary99: #fffbff;
+  --secondary100: #ffffff;
+
+  --tertiary0: #000000;
+  --tertiary10: #001f26;
+  --tertiary20: #003640;
+  --tertiary25: #00424d;
+  --tertiary30: #004e5c;
+  --tertiary35: #005b6a;
+  --tertiary40: #006879;
+  --tertiary50: #008398;
+  --tertiary60: #009fb8;
+  --tertiary70: #28bbd6;
+  --tertiary80: #52d7f3;
+  --tertiary90: #a9edff;
+  --tertiary95: #d7f6ff;
+  --tertiary98: #f0fbff;
+  --tertiary99: #f8fdff;
+  --tertiary100: #ffffff;
+
+  --neutral0: #000000;
+  --neutral10: #1b1b1f;
+  --neutral20: #303034;
+  --neutral25: #3b3b3f;
+  --neutral30: #46464a;
+  --neutral35: #525256;
+  --neutral40: #5e5e62;
+  --neutral50: #77777a;
+  --neutral60: #919094;
+  --neutral70: #acabaf;
+  --neutral80: #c7c6ca;
+  --neutral90: #e4e2e6;
+  --neutral95: #f2f0f4;
+  --neutral98: #fbf8fd;
+  --neutral99: #fefbff;
+  --neutral100: #ffffff;
+
+  --variant0: #000000;
+  --variant10: #191b23;
+  --variant20: #2e3038;
+  --variant25: #393b43;
+  --variant30: #44464f;
+  --variant35: #50525a;
+  --variant40: #5c5e67;
+  --variant50: #757780;
+  --variant60: #8f9099;
+  --variant70: #a9abb4;
+  --variant80: #c5c6d0;
+  --variant90: #e1e2ec;
+  --variant95: #f0f0fa;
+  --variant98: #faf8ff;
+  --variant99: #fefbff;
+  --variant100: #ffffff;
+
+  --error0: #000000;
+  --error10: #410002;
+  --error20: #690005;
+  --error25: #7e0007;
+  --error30: #93000a;
+  --error35: #a80710;
+  --error40: #ba1a1a;
+  --error50: #de3730;
+  --error60: #ff5449;
+  --error70: #ff897d;
+  --error80: #ffb4ab;
+  --error90: #ffdad6;
+  --error95: #ffedea;
+  --error98: #fff8f7;
+  --error99: #fffbff;
+  --error100: #ffffff;
+}
