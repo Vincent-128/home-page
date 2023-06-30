@@ -61,24 +61,27 @@ export const sendMessage = (message: Message) => {
 }
 
 export const testDatabase = async () => {
-  const user = await getUser('vincent')
-  const devices = await getDevices()
-  const entries = await getEntries()
-  const automations = await getAutomations()
+  try {
+    const user = await getUser('vincent')
+    const devices = await getDevices()
+    const entries = await getEntries()
+    const automations = await getAutomations()
 
-  setDeviceOptions(devices)
-  setDevices(devices)
-  setEntries(entries)
-  setAutomations(automations)
-  setUser(user)
+    setDeviceOptions(devices)
+    setDevices(devices)
+    setEntries(entries)
+    setAutomations(automations)
+    setUser(user)
 
-  user.layout.forEach(id => {
-    onValue(child(devicesRef, id), snapshot => {
-      const data = snapshot.val() as DeviceInfo
-      updateDevice(data)
-      console.log(data)
+    user.layout.forEach(id => {
+      onValue(child(devicesRef, id), snapshot => {
+        const data = snapshot.val() as DeviceInfo
+        updateDevice(data)
+        console.log(data)
+      })
     })
-  })
-
-  console.log({ user, automations, entries, devices })
+    console.log({ user, automations, entries, devices })
+  } catch (e) {
+    console.log(e)
+  }
 }
