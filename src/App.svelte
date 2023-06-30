@@ -4,30 +4,32 @@
   import Dashboard from './routes/Dashboard.svelte'  
   import Login from './routes/Login.svelte';
   import {testDatabase} from './stores/database'
-  import { getAuth, onAuthStateChanged } from "firebase/auth";
+  import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+  
+  let page = location.pathname
+  let loggedIn = true
 
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      console.log(uid)
+    loggedIn = !!user
+    if (loggedIn) {
       testDatabase()
+      console.log('Logged in')
     } else {
-      console.log("Not logged in")
-  }
+      console.log('Logged out')
+    }
   })
 
-  let page = location.pathname
 </script>
 
 <div>
-  <Navbar bind:page />
-  {#if page === '/'}
-    <Dashboard />
+  <Navbar bind:page />        
+  {#if !loggedIn}
+    <Login />
   {:else if page === '/automations'}
     <Automations />
-  {:else if page === '/login'}
-    <Login />
+  {:else}
+    <Dashboard />
   {/if}
 </div>
 
