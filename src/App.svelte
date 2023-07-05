@@ -1,32 +1,16 @@
 <script lang="ts">
   import Navbar from './components/Navbar.svelte'
   import Automations from './routes/Automations.svelte'
-  import Dashboard from './routes/Dashboard.svelte'  
-  import Login from './routes/Login.svelte';
-  import {testDatabase} from './stores/database'
-  import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-  
-  let page = location.pathname
-  let loggedIn = true
-
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    loggedIn = !!user
-    if (loggedIn) {
-      testDatabase()
-      console.log('Logged in')
-    } else {
-      console.log('Logged out')
-    }
-  })
-
+  import Dashboard from './routes/Dashboard.svelte'
+  import Login from './routes/Login.svelte'
+  import { loggedIn, page } from './stores/appStore'
 </script>
 
 <div>
-  <Navbar bind:page />        
-  {#if !loggedIn}
+  <Navbar />
+  {#if !$loggedIn}
     <Login />
-  {:else if page === '/automations'}
+  {:else if $page === '/automations'}
     <Automations />
   {:else}
     <Dashboard />

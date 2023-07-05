@@ -1,19 +1,26 @@
 <script lang="ts">
-  export let page: string
+  import { loggedIn, page } from '../stores/appStore'
 
-  window.addEventListener('popstate', () => (page = location.pathname))
+  window.addEventListener('popstate', () => page.set(location.pathname))
 
   const handlePage = (url: string) => () => {
     if (url !== location.pathname) {
       history.pushState(null, null, url)
-      page = url
+      page.set(url)
     }
+  }
+
+  const logout = () => {
+    handlePage('/login')
   }
 </script>
 
 <div class="navbar">
   <a class="title" on:click|preventDefault={handlePage('/')} href="/">Home</a>
   <div class="spacer" />
+  {#if loggedIn}
+    <a class="link" on:click|preventDefault={logout} href="/logout">Logout</a>
+  {/if}
   <a class="link" on:click|preventDefault={handlePage('/')} href="/">Dashboard</a>
   <a class="link" on:click|preventDefault={handlePage('/automations')} href="/automations">Automations</a>
 </div>

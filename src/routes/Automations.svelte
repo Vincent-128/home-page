@@ -2,18 +2,9 @@
   import Automation from '../components/Automation.svelte'
   import { addAutomation, automationIds, getAutomations } from '../stores/automationStore'
   import { getEntries } from '../stores/entryStore'
-  import { sendMessage } from '../stores/database'
-  import { MessageType } from '../types'
 
   const saveAutomations = () => {
-    console.log({automations: getAutomations(), entries: getEntries()})
-    // send({
-    //   event: MessageType.UpdateAutomations,
-    //   data: {
-    //     automations: getAutomations(),
-    //     entries: getEntries(),
-    //   },
-    // })
+    console.log(JSON.stringify({ automations: getAutomations(), entries: getEntries() }))
   }
 </script>
 
@@ -36,7 +27,7 @@
     max-width: 800px;
     margin: auto;
   }
-  
+
   .controls {
     display: flex;
     gap: 10px;
