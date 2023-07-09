@@ -45,7 +45,7 @@ export const updateAutomations = (automations: Automations) => {
 }
 
 export const getEntries = async (): Promise<Entries> => {
-  const entries = await get(automationsRef)
+  const entries = await get(entriesRef)
   return entries.val() || {}
 }
 
@@ -62,12 +62,12 @@ export const sendMessage = (message: Message) => {
   set(child(messagesRef, Date.now().toString()), message)
 }
 
-export const testDatabase = async () => {}
-
 onAuthStateChanged(auth, async credential => {
   try {
     if (credential) {
       const [user, devices, entries, automations] = await Promise.all([getUser(credential.uid), getDevices(), getEntries(), getAutomations()])
+      console.log({ user, devices, entries, automations })
+
       setDeviceOptions(devices)
       setDevices(devices)
       setEntries(entries)

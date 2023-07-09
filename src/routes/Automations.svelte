@@ -1,10 +1,12 @@
 <script lang="ts">
-  import Automation from '../components/Automation.svelte'
   import { addAutomation, automationIds, getAutomations } from '../stores/automationStore'
   import { getEntries } from '../stores/entryStore'
+  import Automation from '../components/Automation.svelte'
+  import { updateAutomations, updateEntries } from '../stores/database'
 
   const saveAutomations = () => {
-    console.log(JSON.stringify({ automations: getAutomations(), entries: getEntries() }))
+    updateAutomations(getAutomations())
+    updateEntries(getEntries())
   }
 </script>
 

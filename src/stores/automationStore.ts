@@ -1,54 +1,58 @@
-import { derived, writable } from 'svelte/store'
+import { derived, get, writable, type Writable } from 'svelte/store'
 import { TriggerType, type Automation, type Automations } from '../types'
 import { getId } from '../utils'
 import { addEntry, removeEntry } from './entryStore'
 
-export const automationIds = writable([])
-export let automations: Automations = {}
+interface WritableAutomation extends Writable<Automation> {
+  remove: () => void
+}
 
-const subscriptions: { [id: string]: (automation: Automation) => void } = {}
+export const automations = writable<Automations>({})
+
+export const automationIds = derived(automations, $automations => Object.keys($automations))
 
 export const setAutomations = (info: Automations) => {
-  automations = info
-  automationIds.set(Object.keys(info))
+  automations.set(info)
 }
 
 export const getAutomations = () => {
-  return automations
+  return get(automations)
 }
 
 export const addAutomation = () => {
   const id = getId()
-  automations[id] = {
-    enabled: true,
-    weekdays: [true, true, true, true, true, true, true],
-    trigger: { type: TriggerType.Device, device: '', state: true },
-    sequence: addEntry(id),
-  }
-  automationIds.update(s => [...s, id])
+  automations.update(a => {
+    a[id] = {
+      enabled: true,
+      weekdays: [true, true, true, true, true, true, true],
+      trigger: { type: TriggerType.Device, device: '', state: true },
+      sequence: addEntry(id),
+    }
+    return a
+  })
 }
 
-export const getAutomationStore = (id: string) => {
+export const getAutomationStore = (id: string): WritableAutomation => {
+  const { subscribe } = derived(automations, $automations => $automations[id])
+
   const set = (value: Automation) => {
-    automations[id] = value
-    subscriptions[id](automations[id])
+    automations.update(a => {
+      a[id] = value
+      return a
+    })
+  }
+
+  const update = (test: any) => {
+    console.log(test)
   }
 
   const remove = () => {
-    removeEntry(automations[id].sequence)
-    delete automations[id]
-    automationIds.set(Object.keys(automations))
+    removeEntry(get(automations)[id].sequence)
+    automations.update(a => {
+      delete a[id]
+      return a
+    })
   }
 
-  const unsubscribe = () => {
-    delete subscriptions[id]
-  }
-
-  const subscribe = (subscription: (automation: Automation) => void) => {
-    subscription(automations[id])
-    subscriptions[id] = subscription
-    return { unsubscribe }
-  }
-
-  return { subscribe, set, remove }
+  return { subscribe, set, update, remove }
 }
