@@ -1,24 +1,16 @@
 <script lang="ts">
   import TextInput from '../components/TextInput.svelte'
-  import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+  import { login } from '../stores/appStore';
 
   let email = ''
   let password = ''
 
-  const login = async () => {
-    const auth = getAuth()
-    try {
-      await signInWithEmailAndPassword(auth, email, password)
-    } catch (error) {
-      console.log(error.code, error.message)
-    }
-  }
 </script>
 
 <div class="container">
   <TextInput label="Username" bind:text={email} />
   <TextInput label="Password" bind:text={password} />
-  <button on:click={login}>Login</button>
+  <button on:click={() => login(email, password)}>Login</button>
 </div>
 
 <style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loggedIn, page } from '../stores/appStore'
+  import { loggedIn, logout, page } from '../stores/appStore'
 
   window.addEventListener('popstate', () => page.set(location.pathname))
 
@@ -8,10 +8,6 @@
       history.pushState(null, null, url)
       page.set(url)
     }
-  }
-
-  const logout = () => {
-    handlePage('/login')
   }
 </script>
 

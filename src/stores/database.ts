@@ -6,7 +6,7 @@ import { setDevices, updateDevice } from './deviceStore'
 import { setEntries } from './entryStore'
 import { setDeviceOptions } from './optionStore'
 import { setUser } from './userStore'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,7 +22,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const db = getDatabase(app)
-const auth = getAuth(app)
 
 const usersRef = ref(db, 'users')
 const devicesRef = ref(db, 'devices')
@@ -62,27 +61,23 @@ export const sendMessage = (message: Message) => {
   set(child(messagesRef, Date.now().toString()), message)
 }
 
-onAuthStateChanged(auth, async credential => {
-  try {
-    if (credential) {
-      const [user, devices, entries, automations] = await Promise.all([getUser(credential.uid), getDevices(), getEntries(), getAutomations()])
-      console.log({ user, devices, entries, automations })
+export const loadData = async (uid: string) => {
+  const [user, devices, entries, automations] = await Promise.all([getUser(uid), getDevices(), getEntries(), getAutomations()])
+  console.log({ user, devices, entries, automations })
 
-      setDeviceOptions(devices)
-      setDevices(devices)
-      setEntries(entries)
-      setAutomations(automations)
-      setUser(user)
+  setDeviceOptions(devices)
+  setDevices(devices)
+  setEntries(entries)
+  setAutomations(automations)
+  setUser(user)
 
-      user.layout.forEach(id => {
-        onValue(child(devicesRef, id), snapshot => {
-          const data = snapshot.val() as DeviceInfo
-          updateDevice(data)
-          console.log(data)
-        })
-      })
-    }
-  } catch (e) {
-    console.log(e)
-  }
-})
+  user.layout.forEach(id => {
+    onValue(child(devicesRef, id), snapshot => {
+      const data = snapshot.val() as DeviceInfo
+      updateDevice(data)
+      console.log(data)
+    })
+  })
+}
+
+
