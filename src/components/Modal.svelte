@@ -1,61 +1,66 @@
 <script lang="ts">
-  import TextInput from './TextInput.svelte'
-  import Select from './Select.svelte'
-  import { createEventDispatcher } from 'svelte'
-  import { fade, fly } from 'svelte/transition'
-  import { DeviceType, type DeviceInfo, type MultiOutletInfo, type DimmerInfo, type BaseInfo, MessageType } from '../types'
-  import { getDevice } from '../stores/deviceStore'
-  import Toggle from './Toggle.svelte'
-  import { sendMessage } from '../stores/database'
+  import TextInput from "./TextInput.svelte";
+  import Select from "./Select.svelte";
+  import { createEventDispatcher } from "svelte";
+  import { fade, fly } from "svelte/transition";
+  import {
+    DeviceType,
+    type DeviceInfo,
+    type BaseInfo,
+    MessageType,
+  } from "../types";
+  import { getDevice } from "../stores/deviceStore";
+  import Toggle from "./Toggle.svelte";
+  import { sendMessage, updateDevices } from "../stores/database";
 
-  export let info: DeviceInfo
-  let outlets: number = 1
+  export let info: DeviceInfo;
+  let outlets: number = 1;
 
   interface T extends BaseInfo {
-    combine?: boolean
-    outlets?: string[]
-    brightness?: number
+    combine?: boolean;
+    outlets?: string[];
+    brightness?: number;
   }
 
   const device = {
     type: info.type,
-    id: new Array(5).fill(''),
-    name: new Array(5).fill(''),
-    room: new Array(5).fill(''),
+    id: new Array(5).fill(""),
+    name: new Array(5).fill(""),
+    room: new Array(5).fill(""),
     icon: new Array(5),
     combine: false,
     outlets: [],
-  }
+  };
 
-  if ('combine' in info) {
-    const test = info.outlets.map(getDevice)
+  if ("combine" in info) {
+    const test = info.outlets.map(getDevice);
     test.forEach((t, i) => {
-      device.id[i] = t.id
-      device.name[i] = t.name
-      device.room[i] = t.room
-      device.icon[i] = t.icon
-    })
-    device.combine = info.combine
-    device.outlets = info.outlets
-    outlets = info.outlets.length
+      device.id[i] = t.id;
+      device.name[i] = t.name;
+      device.room[i] = t.room;
+      device.icon[i] = t.icon;
+    });
+    device.combine = info.combine;
+    device.outlets = info.outlets;
+    outlets = info.outlets.length;
   } else {
-    device.id[0] = info.id
-    device.name[0] = info.name
-    device.room[0] = info.room
-    device.icon[0] = info.icon
+    device.id[0] = info.id;
+    device.name[0] = info.name;
+    device.room[0] = info.room;
+    device.icon[0] = info.icon;
   }
 
   const onType = (e: CustomEvent<any>) => {
-    const type = parseInt(e.detail)
-    device.type = type
-    outlets = type === DeviceType.MultiOutlet ? 2 : 1
-  }
+    const type = parseInt(e.detail);
+    device.type = type;
+    outlets = type === DeviceType.MultiOutlet ? 2 : 1;
+  };
 
-  const dispatch = createEventDispatcher()
-  const close = () => dispatch('close')
+  const dispatch = createEventDispatcher();
+  const close = () => dispatch("close");
 
   const onSave = () => {
-    const deviceInfo: DeviceInfo[] = []
+    const deviceInfo: DeviceInfo[] = [];
 
     for (let i = 0; i < outlets; i++) {
       const test: T = {
@@ -65,24 +70,37 @@
         icon: device.icon[i],
         type: device.type,
         state: false,
-        text: 'Off',
-      }
+        text: "Off",
+      };
 
       if (device.type === DeviceType.MultiOutlet) {
-        test.combine = device.combine
-        test.outlets = device.id.slice(0, outlets)
+        test.combine = device.combine;
+        test.outlets = device.id.slice(0, outlets);
       } else if (device.type === DeviceType.Dimmer) {
-        test.brightness = 100
+        test.brightness = 100;
       }
-      deviceInfo.push(test)
+      deviceInfo.push(test);
     }
-    sendMessage({ event: MessageType.UpdateDevice, data: deviceInfo })
-  }
+    console.log(deviceInfo);
+    updateDevices(deviceInfo);
+    // sendMessage({ event: MessageType.UpdateDevice, data: deviceInfo })
+  };
 </script>
 
-<div class="background" on:click={close} on:keypress={close} transition:fade={{ duration: 250 }} />
+<div
+  class="background"
+  on:click={close}
+  on:keypress={close}
+  transition:fade={{ duration: 250 }}
+/>
 
-<div class="modal" role="dialog" aria-modal="true" in:fly={{ y: -100, duration: 500 }} out:fly={{ y: -50, duration: 500 }}>
+<div
+  class="modal"
+  role="dialog"
+  aria-modal="true"
+  in:fly={{ y: -100, duration: 500 }}
+  out:fly={{ y: -50, duration: 500 }}
+>
   <div class="header">
     <button class="close" on:click={close}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -91,26 +109,41 @@
         />
       </svg>
     </button>
-    <div class="headertext">{info.room + ' ' + info.name}</div>
+    <div class="headertext">{info.room + " " + info.name}</div>
   </div>
 
   <div>
-    <input type="range"/>
+    <input type="range" />
   </div>
 
   <div class="row">
-    <Select label="Type" selected={device.type} on:select={onType} type="type" />
+    <Select
+      label="Type"
+      selected={device.type}
+      on:select={onType}
+      type="type"
+    />
     {#if device.type === DeviceType.MultiOutlet}
-      <Select label="Outlets" selected={outlets} on:select={s => (outlets = parseInt(s.detail))} type="numbers" />
+      <Select
+        label="Outlets"
+        selected={outlets}
+        on:select={s => (outlets = parseInt(s.detail))}
+        type="numbers"
+      />
       <Toggle label="Combine" on="Yes" off="No" bind:state={device.combine} />
     {/if}
   </div>
   {#each new Array(outlets).fill(0) as _, i}
     <div class="row">
-      <TextInput label="Id" bind:text={device.id[i]} />
-      <Select label="Icon" selected={device.icon[i]} on:select={s => (device.icon[i] = parseInt(s.detail))} type="icons" />
-      <TextInput label="Name" bind:text={device.name[i]} />
+      <!-- <TextInput label="Id" bind:text={device.id[i]} /> -->
       <TextInput label="Room" bind:text={device.room[i]} />
+      <TextInput label="Name" bind:text={device.name[i]} />
+      <Select
+        label="Icon"
+        selected={device.icon[i]}
+        on:select={s => (device.icon[i] = parseInt(s.detail))}
+        type="icons"
+      />
     </div>
   {/each}
   <div class="controls">

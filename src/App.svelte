@@ -4,17 +4,19 @@
   import Dashboard from './routes/Dashboard.svelte'
   import Login from './routes/Login.svelte'
   import { loggedIn, page } from './stores/appStore'
+  import Test from './components/test.svelte';
 </script>
 
 <div>
-  <Navbar />
+  <Test/>
+  <!-- <Navbar />
   {#if !$loggedIn}
     <Login />
   {:else if $page === '/automations'}
     <Automations />
   {:else}
     <Dashboard />
-  {/if}
+  {/if} -->
 </div>
 
 <style>
