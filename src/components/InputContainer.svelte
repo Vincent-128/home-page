@@ -22,8 +22,6 @@
     max-width: 235px;
     min-width: 80px;
     color: var(--text-background);
-    margin-right: 10px;
-    margin-top: 4px;
   }
 
   .label {

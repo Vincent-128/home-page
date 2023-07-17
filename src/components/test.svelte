@@ -1,5 +1,4 @@
 <script>
-  import { quintOut } from 'svelte/easing'
   import { crossfade } from 'svelte/transition'
   import { flip } from 'svelte/animate'
 
@@ -8,51 +7,15 @@
     ['Svelte', 'SvelteKit'],
   ]
 
-  const [send, receive] = crossfade({
-    duration: d => Math.sqrt(d * 200),
-
-    fallback(node, params) {
-      const style = getComputedStyle(node)
-      const transform = style.transform === 'none' ? '' : style.transform
-
-      return {
-        duration: 200,
-        easing: quintOut,
-        css: t => `
-					transform: ${transform} scale(${t});
-					opacity: ${t}
-				`,
-      }
-    },
-  })
+  const [send, receive] = crossfade({})
 
   let id = null
   let zoneIndex = null
   let itemIndex = null
 
-  const start = (e, item) => {
-    id = item
-  }
-
-  const enter = (e, index) => {
-    itemIndex = index
-    // e.preventDefault()
-    // data[0] = data[0].filter(i => i !== id)
-    // data[1] = data[1].filter(i => i !== id)
-    // if (itemIndex === null) {
-    //   data[zoneIndex] = [...data[zoneIndex], id]
-    // } else {
-    //   data[zoneIndex] = [
-    //     ...data[zoneIndex].slice(0, itemIndex),
-    //     id,
-    //     ...data[zoneIndex].slice(itemIndex),
-    //   ]
-    // }
-  }
-
-  const leave = (e, index) => {
-    itemIndex = null
-  }
+  const start = item => (id = item)
+  const enter = index => (itemIndex = index)
+  const leave = () => (itemIndex = null)
 
   const drop = e => {
     e.preventDefault()
@@ -80,12 +43,12 @@
     <div
       class="item"
       draggable={true}
-      animate:flip={{duration: 250}}
       in:receive={{ key: item }}
       out:send={{ key: item }}
-      on:dragstart={e => start(e, item)}
-      on:dragenter={e => enter(e, j)}
-      on:dragleave={e => leave(e, j)}
+      animate:flip={{ duration: 250 }}
+      on:dragstart={e => start(item)}
+      on:dragenter={e => enter(j)}
+      on:dragleave={e => leave()}
     >
       {item}
     </div>
@@ -97,12 +60,12 @@
     <div
       class="item"
       draggable={true}
-      animate:flip={{duration: 250}}
       in:receive={{ key: item }}
       out:send={{ key: item }}
-      on:dragstart={e => start(e, item)}
-      on:dragenter={e => enter(e, j)}
-      on:dragleave={e => leave(e, j)}
+      animate:flip={{ duration: 250 }}
+      on:dragstart={e => start(item)}
+      on:dragenter={e => enter(j)}
+      on:dragleave={e => leave()}
     >
       {item}
     </div>

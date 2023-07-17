@@ -144,6 +144,7 @@
 <style>
   .container {
     display: flex;
+    gap: 10px;
     align-items: center;
   }
 
@@ -160,7 +161,6 @@
     width: 20px;
     border-radius: 5px;
     float: right;
-    margin-right: 10px;
   }
 
   .remove:hover {

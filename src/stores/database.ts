@@ -57,10 +57,8 @@ export const getDevices = async (): Promise<{ [id: string]: DeviceInfo }> => {
   return devices.val() || {}
 }
 
-export const updateDevices = async (info: DeviceInfo[]) => {
-  info.forEach(device => {
-    set(child(devicesRef, device.id), device)
-  })
+export const updateDevices = async (device: DeviceInfo) => {
+  set(child(devicesRef, device.id), device)
 }
 
 export const sendMessage = (message: Message) => {

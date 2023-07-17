@@ -8,15 +8,15 @@
 </script>
 
 <div>
-  <Test/>
-  <!-- <Navbar />
+  <!-- <Test/> -->
+  <Navbar />
   {#if !$loggedIn}
     <Login />
   {:else if $page === '/automations'}
     <Automations />
   {:else}
     <Dashboard />
-  {/if} -->
+  {/if}
 </div>
 
 <style>
