@@ -3,18 +3,38 @@
   import Select from './Select.svelte'
   import { createEventDispatcher } from 'svelte'
   import { fade, fly } from 'svelte/transition'
-  import type { DeviceInfo } from '../types'
-  import { updateDevices } from '../stores/database'
+  import { DeviceType, MessageType, type DeviceInfo } from '../types'
+  import { sendMessage, updateDevices } from '../stores/database'
 
   export let info: DeviceInfo
-  let slider
+
   let room = info.room
   let name = info.name
   let icon = info.icon
+  let brightness = 0
+
+  if ('brightness' in info) {
+    brightness = info.state ? info.brightness / 5 : 0
+  }
 
   const dispatch = createEventDispatcher()
   const close = () => dispatch('close')
   const save = () => updateDevices({ ...info, room, name, icon })
+  const test = () => {
+    if (brightness === 0) {
+      sendMessage({
+        event: MessageType.Set,
+        id: info.id,
+        data: { state: false, brightness: 5 },
+      })
+    } else {
+      sendMessage({
+        event: MessageType.Set,
+        id: info.id,
+        data: { state: true, brightness: brightness * 5 },
+      })
+    }
+  }
 </script>
 
 <div
@@ -36,9 +56,18 @@
     <div class="subheader">{info.text}</div>
   </div>
 
-  <div>
-    <input class="slider" type="range" min="0" max="20" step="1"/>
-  </div>
+  {#if info.type === DeviceType.Dimmer}
+    <input
+      class="slider"
+      type="range"
+      min="0"
+      max="20"
+      step="1"
+      bind:value={brightness}
+      on:change={test}
+    />
+  {/if}
+
   <TextInput label="Room" bind:text={room} />
   <TextInput label="Name" bind:text={name} />
   <Select
@@ -58,24 +87,24 @@
     appearance: none;
     background: transparent;
     cursor: pointer;
-    width: 15rem;
-    
   }
 
   input[type='range']::-webkit-slider-runnable-track {
-    background: #053a5f;
+    background: var(--background2);
     height: 20px;
     border-radius: 5px;
     overflow: hidden;
   }
 
-  input[type="range"]::-webkit-slider-thumb {
-   -webkit-appearance: none;
-   appearance: none;
-   background-color: #5cd5eb;
-   height: 20px;
-   width: 1rem;    
-}
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--tertiary1);
+    border-radius: 5px;
+    box-shadow: -205px 0 0 200px var(--tertiary1);
+    height: 20px;
+    width: 10px;
+  }
 
   .background {
     position: fixed;

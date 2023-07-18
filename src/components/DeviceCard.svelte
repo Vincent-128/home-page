@@ -4,10 +4,9 @@
   import { DeviceType as T, MessageType } from '../types'
   import { sendMessage } from '../stores/database'
   import Modal from './Modal.svelte'
-  import TextInput from './TextInput.svelte'
-  import Select from './Select.svelte'
 
   export let id: string
+  export let draggable: boolean
   let showModal = false
 
   const store = getDeviceStore(id)
@@ -21,11 +20,9 @@
   const secondaryClick = () => {
     showModal = true
   }
-
-  const onSave = () => {}
 </script>
 
-<button class="container" on:click={primaryClick} class:state={$store.state}>
+<button class="container" on:click={primaryClick} class:state={$store.state} {draggable}>
   <button class="circle" on:click|stopPropagation={secondaryClick}>
     <Icon icon={$store.icon} state={$store.state} />
   </button>
