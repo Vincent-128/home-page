@@ -1,28 +1,35 @@
 <script lang="ts">
   import Icon from './Icon.svelte'
+  import Modal from './Modal.svelte'
+  import { sendMessage } from '../stores/database'
   import { getDeviceStore } from '../stores/deviceStore'
   import { DeviceType as T, MessageType } from '../types'
-  import { sendMessage } from '../stores/database'
-  import Modal from './Modal.svelte'
 
   export let id: string
   export let draggable: boolean
+  
   let showModal = false
-
   const store = getDeviceStore(id)
+  const clickable = [T.Garage, T.Button, T.Dimmer, T.MultiOutlet, T.Outlet, T.Switch].includes($store.type)
 
   const primaryClick = () => {
-    if ([T.Garage, T.Button, T.Dimmer, T.MultiOutlet, T.Outlet, T.Switch].includes($store.type)) {
+    if (clickable) {
       sendMessage({ event: MessageType.Toggle, id })
     }
   }
 
-  const secondaryClick = () => {
-    showModal = true
-  }
+  const secondaryClick = () => (showModal = true)
 </script>
 
-<button class="container" on:click={primaryClick} class:state={$store.state} {draggable}>
+<button
+  class="container"
+  class:draggable
+  class:state={$store.state}
+  on:click={primaryClick}
+  on:dragstart
+  on:dragenter
+  on:dragleave
+>
   <button class="circle" on:click|stopPropagation={secondaryClick}>
     <Icon icon={$store.icon} state={$store.state} />
   </button>
@@ -47,6 +54,10 @@
     align-items: center;
     background-color: var(--background1);
     user-select: none;
+  }
+
+  .container.draggable {
+    -webkit-user-drag: element;
   }
 
   .container div {

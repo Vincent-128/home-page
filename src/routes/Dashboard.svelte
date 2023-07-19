@@ -1,28 +1,52 @@
 <script lang="ts">
   import DeviceCard from '../components/DeviceCard.svelte'
   import { user } from '../stores/userStore'
-  let show = false
 
-  const click = () => {
-    show = !show
+  let draggable = false
+
+  const click = () => (draggable = !draggable)
+
+  const drop = e => {
+    console.log('drop')
+    e.preventDefault()
   }
+
+  const over = e => {
+    e.preventDefault()
+  }
+
+  const start = () => console.log('start')
+  const enter = () => console.log('enter')
+  const leave = () => console.log('leave')
 </script>
 
-<div class="dashboard">
-  {#each $user.layout as id (id)}
-    <DeviceCard {id} draggable={show}/>
+<div class="dashboard" on:drop={drop} on:dragover={over}>
+  {#each $user.layout as id, i (id)}
+    <DeviceCard
+      {id}
+      {draggable}
+      on:dragstart={e => start()}
+      on:dragenter={e => enter()}
+      on:dragleave={e => leave()}
+    />
   {/each}
 </div>
 
-{#if show}
-  <div class="dashboard">
-    {#each $user.layout as id (id)}
-      <DeviceCard {id} draggable={show}/>
-    {/each}
-  </div>
+{#if draggable}
+<div class="dashboard" on:drop={drop} on:dragover={over}>
+  {#each $user.layout as id, i (id)}
+    <DeviceCard
+      {id}
+      {draggable}
+      on:dragstart={e => start()}
+      on:dragenter={e => enter()}
+      on:dragleave={e => leave()}
+    />
+  {/each}
+</div>
 {/if}
 
-<button on:click={click} />
+<!-- <button on:click={click} /> -->
 
 <style>
   .dashboard {
@@ -33,6 +57,7 @@
     max-width: 1200px;
     grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
   }
+
   button {
     position: absolute;
     bottom: 20px;
