@@ -8,9 +8,9 @@ export const loggedIn = writable(true)
 
 page.set(location.pathname)
 
-export const login = async (email: string, password: string) => {
+export const login = async (username: string, password: string) => {
     try {
-        await signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, username + '@home60.firebaseapp.com', password)
     } catch (error) {
         console.log(error.code, error.message)
     }
