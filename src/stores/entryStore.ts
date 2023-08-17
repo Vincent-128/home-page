@@ -1,4 +1,4 @@
-import { EntryType, type DeviceEntry, type Entry, type IfElseEntry, type IfEntry, type WaitEntry, type WhileEntry, type Entries } from '../types'
+import { EntryType, type DeviceEntry, type Entry, type IfElseEntry, type IfEntry, type WaitEntry, type WhileEntry, type Entries, ConditionType } from '../types'
 import { getId } from '../utils'
 
 const subscriptions: { [id: string]: (entry: Entry) => void } = {}
@@ -82,11 +82,32 @@ export const getEntryStore = (id: string) => {
     set(entries[id])
   }
 
+  const addCondition = (type: ConditionType) => {
+    const entry = entries[id]
+    if ('conditions' in entry) {
+      if (entry.conditions.length > 0) {
+        entry.conditions.push({ type: ConditionType.Operator, isAnd: true })
+      }
+
+      if (type === ConditionType.State) {
+        entry.conditions.push({ type, device: '', state: true })
+      } else if (type === ConditionType.Range){
+        entry.conditions.push({ type, start: '', end: '' })
+      }
+
+      subscriptions[id](entry)
+    }
+  }
+
+  const removeCondition = () => {
+
+  }
+
   const subscribe = (subscription: (entry: Entry) => void) => {
     subscription(entries[id])
     subscriptions[id] = subscription
     return { unsubscribe }
   }
 
-  return { subscribe, set, addChild, remove }
+  return { subscribe, set, addChild, remove, addCondition, removeCondition }
 }
