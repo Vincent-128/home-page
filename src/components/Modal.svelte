@@ -6,6 +6,7 @@
   import { DeviceType, MessageType, type DeviceInfo } from '../types'
   import { sendMessage, updateDevices } from '../stores/database'
 
+export let id: string
   export let info: DeviceInfo
 
   let room = info.room
@@ -19,18 +20,18 @@
 
   const dispatch = createEventDispatcher()
   const close = () => dispatch('close')
-  const save = () => updateDevices({ ...info, room, name, icon })
+  const save = () => updateDevices(id, {...info, room, name, icon })
   const test = () => {
     if (brightness === 0) {
       sendMessage({
         event: MessageType.Set,
-        id: info.id,
+id,
         data: { state: false, brightness: 5 },
       })
     } else {
       sendMessage({
         event: MessageType.Set,
-        id: info.id,
+        id,
         data: { state: true, brightness: brightness * 5 },
       })
     }

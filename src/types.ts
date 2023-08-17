@@ -57,7 +57,6 @@ export enum Theme {
 ///////////////////////////////////////////////////////////////////
 // Devices
 export interface BaseInfo {
-  id: string
   name: string
   room: string
   type: DeviceType

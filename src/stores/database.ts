@@ -57,8 +57,8 @@ export const getDevices = async (): Promise<{ [id: string]: DeviceInfo }> => {
   return devices.val() || {}
 }
 
-export const updateDevices = async (device: DeviceInfo) => {
-  set(child(devicesRef, device.id), device)
+export const updateDevices = async (id: string, device: DeviceInfo) => {
+  set(child(devicesRef, id), device)
 }
 
 export const sendMessage = (message: Message) => {
@@ -78,10 +78,8 @@ export const loadData = async (uid: string) => {
   user.layout.forEach(id => {
     onValue(child(devicesRef, id), snapshot => {
       const data = snapshot.val() as DeviceInfo
-      updateDevice(data)
+      updateDevice(id, data)
       console.log(data)
     })
   })
 }
-
-

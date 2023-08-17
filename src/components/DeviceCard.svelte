@@ -40,7 +40,7 @@
 </button>
 
 {#if showModal}
-  <Modal info={$store} on:close={() => (showModal = false)} />
+  <Modal {id} info={$store} on:close={() => (showModal = false)} />
 {/if}
 
 <style>

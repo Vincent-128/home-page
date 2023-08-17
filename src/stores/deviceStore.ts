@@ -21,9 +21,9 @@ export const setDevices = (deviceInfo: { [id: string]: DeviceInfo }) => {
   devices = deviceInfo
 }
 
-export const updateDevice = (deviceInfo: DeviceInfo) => {
-  devices[deviceInfo.id] = deviceInfo
-  subscriptions[deviceInfo.id]?.(deviceInfo)
+export const updateDevice = (id: string, deviceInfo: DeviceInfo) => {
+  devices[id] = deviceInfo
+  subscriptions[id]?.(deviceInfo)
 }
 
 export const getDevice = (id: string) => {
