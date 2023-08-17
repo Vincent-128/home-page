@@ -2,18 +2,17 @@
   import Icon from './Icon.svelte'
   import Modal from './Modal.svelte'
   import { sendMessage } from '../stores/database'
-  import { getDeviceStore } from '../stores/deviceStore'
-  import { DeviceType as T, MessageType } from '../types'
+  import { getDeviceStore, isControllable } from '../stores/deviceStore'
+  import { MessageType } from '../types'
 
   export let id: string
   export let draggable: boolean
   
   let showModal = false
   const store = getDeviceStore(id)
-  const clickable = [T.Garage, T.Button, T.Dimmer, T.MultiOutlet, T.Outlet, T.Switch].includes($store.type)
 
   const primaryClick = () => {
-    if (clickable) {
+    if (isControllable($store.type)) {
       sendMessage({ event: MessageType.Toggle, id })
     }
   }

@@ -1,6 +1,7 @@
 <script lang="ts">
   import InputContainer from './InputContainer.svelte'
   import { options as o, type Options } from '../stores/optionStore'
+  import { onDestroy } from 'svelte'
   import { clickAway } from '../utils'
 
   type V = $$Generic<string | number>
@@ -13,15 +14,12 @@
   let active = false
   let showOptions = false
 
-  const options = o[type]
-  const handleClick = () => {
-    showOptions = true
-  }
+  let options
+  const unsubscribe = o.subscribe(value => options = value[type])
+  onDestroy(unsubscribe)
 
-  const handleOutClick = () => {
-    showOptions = false
-  }
-
+  const handleClick = () => showOptions = true
+  const handleOutClick = () => showOptions = false
   const handleOption = (value: V) => () => {
     if (selected.includes(value)) {
       selected = selected.filter(s => s !== value)

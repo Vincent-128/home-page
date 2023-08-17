@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
-  export let options: { [value: number]: string }
+  import { createEventDispatcher, onDestroy } from 'svelte'
+  import { options as o } from '../stores/optionStore'
+  export let type: string
 
   let active: boolean = false
   let container: HTMLDivElement
+
+  let options
+  const unsubscribe = o.subscribe(value => options = value[type])
+  onDestroy(unsubscribe)
 
   const dispatch = createEventDispatcher()
   const hover = (state: boolean) => () => (active = state)

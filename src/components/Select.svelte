@@ -1,7 +1,7 @@
 <script lang="ts">
   import InputContainer from './InputContainer.svelte'
   import { options as o, type Options } from '../stores/optionStore'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onDestroy } from 'svelte'
   import { clickAway } from '../utils'
 
   export let selected: number | string
@@ -10,8 +10,10 @@
 
   let active = false
   let showOptions = false
+  let options
+  const unsubscribe = o.subscribe(value => options = value[type])
+  onDestroy(unsubscribe)
 
-  const options = o[type]
   const dispatch = createEventDispatcher()
 
   const handleClick = () => (showOptions = true)

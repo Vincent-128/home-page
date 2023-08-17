@@ -99,9 +99,19 @@ export const getEntryStore = (id: string) => {
     }
   }
 
-  const removeCondition = () => {
-
-  }
+  const removeCondition = (index: number) => {
+    const entry = entries[id]
+    if ('conditions' in entry) {
+      if (index === 0) {
+        entry.conditions.splice(0, 1)
+        entry.conditions.splice(0, 1)
+      } else {
+        entry.conditions.splice(index, 1)
+        entry.conditions.splice(index - 1, 1)
+      }
+    }
+    subscriptions[id](entry)
+  } 
 
   const subscribe = (subscription: (entry: Entry) => void) => {
     subscription(entries[id])

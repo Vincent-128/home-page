@@ -17,7 +17,7 @@
 <div class="row">
   <Select selected={trigger.type} on:select={e => handleType(parseInt(e.detail))} type="trigger" label="Event" />
   {#if trigger.type === TriggerType.Device}
-    <Select bind:selected={trigger.device} type="device" label="Device" />
+    <Select bind:selected={trigger.device} type="all" label="Device" />
     <Toggle label="State" on="Turns On" off="Turns Off" bind:state={trigger.state} />
   {:else if trigger.type === TriggerType.Time}
     <TextInput label="Time" bind:text={trigger.time} />
@@ -31,5 +31,7 @@
 <style>
   .row {
     display: flex;
+    gap: 10px;
+    align-items: center;
   }
 </style>

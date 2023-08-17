@@ -8,17 +8,14 @@
   import RemoveButton from './RemoveButton.svelte'
   import { getEntryStore } from '../stores/entryStore.js'
   import { EntryType, ConditionType } from '../types'
-  import { options } from '../stores/optionStore'
 
   export let id: string
   export let indent = -1
 
-  const test = { [ConditionType.State]: 'Device', [ConditionType.Range]: 'Time' }
   const entry = getEntryStore(id)
   const width = indent * 30 + 30 + 'px'
 
   const handleAdd = event => entry.addChild(event.detail)
-  const handleRemove = () => entry.remove()
   const handleAddCondition = event => entry.addCondition(event.detail)
 </script>
 
@@ -28,41 +25,41 @@
   {/each}
   <div class="container">
     <div style:width />
-    <AddButton options={options.entry} on:click={handleAdd} />
+    <AddButton type={'entry'} on:click={handleAdd} />
   </div>
 {:else if $entry.type === EntryType.Device}
   <div class="container">
-    <RemoveButton {width} on:click={handleRemove}/>
-    <MultiSelect label="Devices" type="device" bind:selected={$entry.devices} />
+    <RemoveButton {width} on:click={entry.remove}/>
+    <MultiSelect label="Devices" type="controllable" bind:selected={$entry.devices} />
     <Toggle label="State" on="Turn On" off="Turn Off" bind:state={$entry.state} />
     <Select label="Brightness" type="brightness" bind:selected={$entry.brightness} />
   </div>
 {:else if $entry.type === EntryType.Wait}
   <div class="container">
-    <RemoveButton {width} on:click={handleRemove}/>
+    <RemoveButton {width} on:click={entry.remove}/>
     <TextInput label="Wait" bind:text={$entry.wait} />
   </div>
 {:else if $entry.type === EntryType.If}
   <div class="container">
-    <RemoveButton {width} on:click={handleRemove}/>
+    <RemoveButton {width} on:click={entry.remove}/>
     <div class="text">If</div>
     <div class="conditions">
-      {#each $entry.conditions as condition}
-        <Condition bind:condition />
+      {#each $entry.conditions as condition, i (i)}
+        <Condition bind:condition on:remove={() => entry.removeCondition(i)}/>
       {/each}
-      <AddButton options={test} on:click={handleAddCondition} />
+      <AddButton type={'conditions'} on:click={handleAddCondition} />
     </div>
   </div>
   <svelte:self id={$entry.seq1} {indent} />
 {:else if $entry.type === EntryType.IfElse}
   <div class="container">
-    <RemoveButton {width} on:click={handleRemove}/>
+    <RemoveButton {width} on:click={entry.remove}/>
     <div class="text">If</div>
     <div class="conditions">
-      {#each $entry.conditions as condition}
-        <Condition bind:condition />
+      {#each $entry.conditions as condition, i (i)}
+        <Condition bind:condition on:remove={() => entry.removeCondition(i)}/>
       {/each}
-      <AddButton options={test} on:click={handleAddCondition} />
+      <AddButton type={'conditions'} on:click={handleAddCondition} />
     </div>
   </div>
   <svelte:self id={$entry.seq1} {indent} />
@@ -73,13 +70,13 @@
   <svelte:self id={$entry.seq2} {indent} />
 {:else if $entry.type === EntryType.While}
   <div class="container">
-    <RemoveButton {width} on:click={handleRemove}/>
+    <RemoveButton {width} on:click={entry.remove}/>
     <div class="text">While</div>
     <div class="conditions">
-      {#each $entry.conditions as condition}
-        <Condition bind:condition />
+      {#each $entry.conditions as condition, i (i)}
+        <Condition bind:condition on:remove={() => entry.removeCondition(i)}/>
       {/each}
-      <AddButton options={test} on:click={handleAddCondition} />
+      <AddButton type={'conditions'} on:click={handleAddCondition} />
     </div>
   </div>
   <svelte:self id={$entry.seq1} {indent} />

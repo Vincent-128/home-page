@@ -1,5 +1,5 @@
 <script script lang="ts">
-  let width: string
+  export let width: string
 </script>
 
 <div class="container">
