@@ -1,17 +1,21 @@
 <script lang="ts">
   import TextInput from '../components/TextInput.svelte'
-  import { login } from '../stores/appStore';
+  import { login } from '../stores/appStore'
 
   let email = ''
   let password = ''
 
+  const onSubmit = (e: any) => {
+    e.preventDefault()
+    login(email, password)
+  }
 </script>
 
-<div class="container">
+<form class="container" on:submit={onSubmit}>
   <TextInput label="Username" bind:text={email} />
-  <TextInput label="Password" bind:text={password} />
-  <button on:click={() => login(email, password)}>Login</button>
-</div>
+  <TextInput label="Password" type="password" bind:text={password} />
+  <button type="submit">Login</button>
+</form>
 
 <style>
   button {

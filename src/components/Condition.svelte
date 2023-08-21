@@ -15,16 +15,15 @@
     showOptions = false
   }
 
-  let options;
-  const unsubscribe = o.subscribe(value => options = value.all);
-  onDestroy(unsubscribe);
-  const remove = () =>  dispatch('remove')
+  let options
+  const unsubscribe = o.subscribe(value => (options = value.all))
+  onDestroy(unsubscribe)
+  const remove = () => dispatch('remove')
 </script>
 
 <div class="condition">
   {#if condition.type === ConditionType.State}
     <button class="text" on:click={handleClick}>{options[condition.device] || 'Select Device'}</button>
-
     {#if showOptions}
       <div class="options" use:clickAway on:outclick={handleOutClick}>
         {#each Object.entries(options) as [value, text] (value)}
@@ -42,7 +41,7 @@
       </div>
     {/if}
 
-    <button class="text" on:click={() => condition.state = !condition.state}>
+    <button class="text" on:click={() => (condition.state = !condition.state)}>
       {condition.state ? 'Is On' : 'Is Off'}
     </button>
     <button on:click={remove} class="remove">

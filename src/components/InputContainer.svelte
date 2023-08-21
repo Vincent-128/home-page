@@ -4,7 +4,7 @@
 
 </script>
 
-<button class="container" class:active on:click>
+<button class="container" type="button" class:active on:click>
   <div class="label" class:active>{label}</div>
   <slot />
 </button>

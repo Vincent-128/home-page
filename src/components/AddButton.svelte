@@ -6,8 +6,8 @@
   let active: boolean = false
   let container: HTMLDivElement
 
-  let options
-  const unsubscribe = o.subscribe(value => options = value[type])
+  let options: { [id: string]: string }
+  const unsubscribe = o.subscribe(value => (options = value[type]))
   onDestroy(unsubscribe)
 
   const dispatch = createEventDispatcher()
@@ -15,14 +15,7 @@
   const click = (value: string) => () => dispatch('click', parseInt(value))
 </script>
 
-<div
-  class:active
-  class="container"
-  bind:this={container}
-  style="width: {active ? container.scrollWidth - 6 : 24}px"
-  on:mouseenter={hover(true)}
-  on:mouseleave={hover(false)}
->
+<div class:active class="container" bind:this={container} style="width: {active ? container.scrollWidth - 6 : 24}px" on:mouseenter={hover(true)} on:mouseleave={hover(false)}>
   <div class="plus" class:active>+</div>
   {#each Object.entries(options) as [value, text] (value)}
     <button class="option" class:active on:click={click(value)}>{text}</button>
