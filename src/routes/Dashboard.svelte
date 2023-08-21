@@ -51,18 +51,8 @@
 <style>
   .dashboard {
     gap: 15px;
-    padding: 10px;
-    margin: auto;
+    margin: 20px;
     display: grid;
-    max-width: 1200px;
     grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-  }
-
-  button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    height: 30px;
-    width: 30px;
   }
 </style>

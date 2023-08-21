@@ -8,18 +8,31 @@
   import Sidebar from './components/Sidebar.svelte'
 </script>
 
-<div>
+<div class="container">
   <Sidebar />
-  <!-- <Test/> -->
-  <!-- <Navbar />
-  {#if !$loggedIn}
-    <Login />
-  {:else if $page === '/automations'}
-    <Automations />
-  {:else}
-    <Dashboard />
-  {/if} -->
+  <main>
+    {#if !$loggedIn}
+      <Login />
+    {:else if $page === '/automations'}
+      <Automations />
+    {:else}
+      <Dashboard />
+    {/if}
+  </main>
 </div>
 
 <style>
+  .container {
+    position: fixed;
+    align-items: start;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    height: 100vh;
+    width: 100vw;
+    /* overflow: hidden; */
+  }
+  main {
+    height: 100vh;
+    overflow-y: auto;
+  }
 </style>
