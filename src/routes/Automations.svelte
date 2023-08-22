@@ -26,6 +26,7 @@
     flex-direction: column;
     gap: 10px;
     margin: 20px;
+    align-items: center;
   }
 
   .controls {
@@ -34,6 +35,7 @@
     justify-content: flex-end;
     bottom: 18px;
     right: 18px;
+    align-self: flex-end;
   }
 
   button {

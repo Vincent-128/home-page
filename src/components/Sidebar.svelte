@@ -1,15 +1,12 @@
 <script lang="ts">
-  import { loggedIn, logout, page } from '../stores/appStore'
+  import { loggedIn, logout, setPage } from '../stores/appStore'
   import { options } from '../stores/optionStore'
-
-  window.addEventListener('popstate', () => page.set(location.pathname))
 
   const handlePage = (e: MouseEvent) => {
     e.preventDefault()
     const url = (e.target as HTMLAnchorElement).getAttribute('href')
     if (url !== location.pathname) {
-      history.pushState(null, null, url)
-      page.set(url)
+      setPage(url)
     }
   }
 </script>

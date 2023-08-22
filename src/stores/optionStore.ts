@@ -27,7 +27,7 @@ export const setDeviceOptions = (devices: { [id: string]: DeviceInfo }) => {
 
   for (let id in devices) {
     const name = `${devices[id].room} ${devices[id].name}`
-    rooms[devices[id].room.replace(/ /g, '').toLowerCase()] = devices[id].room
+    rooms[devices[id].room.replace(/ /g, '-').toLowerCase()] = devices[id].room
     all[id] = name
 
     if (devices[id].type === DeviceType.Dimmer) {

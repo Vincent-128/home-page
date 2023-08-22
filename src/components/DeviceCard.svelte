@@ -6,7 +6,6 @@
   import { MessageType } from '../types'
 
   export let id: string
-  export let draggable: boolean
   
   let showModal = false
   const store = getDeviceStore(id)
@@ -22,7 +21,6 @@
 
 <button
   class="container"
-  class:draggable
   class:state={$store.state}
   on:click={primaryClick}
   on:dragstart
@@ -53,10 +51,6 @@
     align-items: center;
     background-color: var(--background1);
     user-select: none;
-  }
-
-  .container.draggable {
-    -webkit-user-drag: element;
   }
 
   .container div {

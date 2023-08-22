@@ -30,6 +30,10 @@ export const getDevice = (id: string) => {
   return devices[id]
 }
 
+export const getDevices = () => {
+  return devices
+}
+
 export const getDeviceStore = (id: string) => {
   const set = (value: DeviceInfo) => {
     devices[id] = value

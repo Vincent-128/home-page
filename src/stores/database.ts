@@ -75,7 +75,7 @@ export const loadData = async (uid: string) => {
   setAutomations(automations)
   setUser(user)
 
-  user.layout.forEach(id => {
+  Object.keys(devices).forEach(id => {
     onValue(child(devicesRef, id), snapshot => {
       const data = snapshot.val() as DeviceInfo
       updateDevice(id, data)
