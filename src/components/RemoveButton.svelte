@@ -36,9 +36,4 @@
     width: 100%;
     fill: var(--background4);
   }
-
-  .text {
-    color: var(--text-background);
-    margin-right: 10px;
-  }
 </style>
