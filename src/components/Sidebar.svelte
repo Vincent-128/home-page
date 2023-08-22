@@ -51,6 +51,7 @@
     display: flex;
     flex-direction: column;
     height: inherit;
+    background-color: #00000010;
   }
   .sidebar .link:first-child {
     margin-top: 20px;

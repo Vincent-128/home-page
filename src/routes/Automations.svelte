@@ -24,18 +24,15 @@
   .container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 20px;
-    align-items: center;
+    gap: 20px;
+    margin: 50px auto 20px auto;
+    max-width: 900px;
   }
 
   .controls {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
-    bottom: 18px;
-    right: 18px;
-    align-self: flex-end;
   }
 
   button {

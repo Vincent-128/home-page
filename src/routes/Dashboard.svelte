@@ -14,8 +14,9 @@
 <style>
   .dashboard {
     gap: 15px;
-    margin: 20px;
+    margin: 50px auto 20px auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    max-width: 1200px;
   }
 </style>

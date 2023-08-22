@@ -95,4 +95,8 @@
     align-items: center;
     flex-wrap: wrap;
   }
+
+  .text {
+    color: #fff
+  }
 </style>
