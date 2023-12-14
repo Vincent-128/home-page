@@ -1,6 +1,6 @@
 <script lang="ts">
-  import DeviceCard from '../components/DeviceCard.svelte'
-    import { layout } from '../stores/appStore'
+  import DeviceCard from './DeviceCard.svelte'
+    import { layout } from '../../stores/appStore'
 
 </script>
 

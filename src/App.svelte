@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Automations from './routes/Automations.svelte'
-  import Dashboard from './routes/Dashboard.svelte'
-  import Login from './routes/Login.svelte'
+  import Automations from './components/automations/Automations.svelte'
+  import Dashboard from './routes/dashboard/Dashboard.svelte'
+  import Login from './routes/login/Login.svelte'
   import { loggedIn, page } from './stores/appStore'
   import Sidebar from './components/Sidebar.svelte'
 </script>

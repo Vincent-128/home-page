@@ -1,13 +1,13 @@
 <script script lang="ts">
-  import Select from './Select.svelte'
-  import MultiSelect from './MultiSelect.svelte'
-  import TextInput from './TextInput.svelte'
-  import Toggle from './Toggle.svelte'
-  import Condition from './conditions/index.svelte'
-  import AddButton from './AddButton.svelte'
-  import RemoveButton from './RemoveButton.svelte'
-  import { getEntryStore } from '../stores/entryStore.js'
-  import { EntryType, ConditionType } from '../types'
+  import Select from '../selects/Select.svelte'
+  import MultiSelect from '../selects/MultiSelect.svelte'
+  import TextInput from '../inputs/TextInput.svelte'
+  import Toggle from '../inputs/Toggle.svelte'
+  import Condition from '../conditions/index.svelte'
+  import AddButton from '../inputs/AddButton.svelte'
+  import RemoveButton from '../inputs/RemoveButton.svelte'
+  import { getEntryStore } from '../../stores/entryStore.js'
+  import { EntryType, ConditionType } from '../../types'
 
   export let id: string
   export let indent = -1

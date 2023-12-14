@@ -1,9 +1,9 @@
 <script lang="ts">
   import Icon from './Icon.svelte'
   import Modal from './Modal.svelte'
-  import { sendMessage } from '../stores/database'
-  import { getDeviceStore, isControllable } from '../stores/deviceStore'
-  import { MessageType } from '../types'
+  import { sendMessage } from '../../stores/database'
+  import { getDeviceStore, isControllable } from '../../stores/deviceStore'
+  import { MessageType } from '../../types'
 
   export let id: string
   

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { addAutomation, automationIds, getAutomations } from '../stores/automationStore'
-  import { getEntries } from '../stores/entryStore'
-  import Automation from '../components/Automation.svelte'
-  import { updateAutomations, updateEntries } from '../stores/database'
+  import { addAutomation, automationIds, getAutomations } from '../../stores/automationStore'
+  import { getEntries } from '../../stores/entryStore'
+  import Automation from './Automation.svelte'
+  import { updateAutomations, updateEntries } from '../../stores/database'
 
   const saveAutomations = () => {
     updateAutomations(getAutomations())

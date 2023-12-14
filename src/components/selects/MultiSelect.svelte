@@ -1,8 +1,8 @@
 <script lang="ts">
-  import InputContainer from './InputContainer.svelte'
-  import { options as o, type Options } from '../stores/optionStore'
+  import InputContainer from '../inputs/InputContainer.svelte'
+  import { options as o, type Options } from '../../stores/optionStore'
   import { onDestroy } from 'svelte'
-  import { clickAway } from '../utils'
+  import { clickAway } from '../../utils'
 
   type V = $$Generic<string | number>
   type S = V[]
@@ -14,7 +14,7 @@
   let active = false
   let showOptions = false
 
-  let options
+  let options: { [id: string]: V }
   const unsubscribe = o.subscribe(value => options = value[type])
   onDestroy(unsubscribe)
 

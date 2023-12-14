@@ -1,8 +1,8 @@
 <script lang="ts">
-  import InputContainer from './InputContainer.svelte'
-  import { options as o, type Options } from '../stores/optionStore'
+  import InputContainer from '../inputs/InputContainer.svelte'
+  import { options as o, type Options } from '../../stores/optionStore'
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { clickAway } from '../utils'
+  import { clickAway } from '../../utils'
 
   export let selected: number | string
   export let type: keyof Options

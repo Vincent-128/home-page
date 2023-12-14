@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Select from './Select.svelte'
-  import Toggle from './Toggle.svelte'
-  import TextInput from './TextInput.svelte'
-  import { TriggerType } from '../types'
-  import type { Trigger } from '../types'
+  import Select from '../selects/Select.svelte'
+  import Toggle from '../inputs/Toggle.svelte'
+  import TextInput from '../inputs/TextInput.svelte'
+  import { TriggerType } from '../../types'
+  import type { Trigger } from '../../types'
 
   export let trigger: Trigger
 

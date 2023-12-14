@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon } from '../types'
+  import { Icon } from '../../types'
   export let icon: Icon
   export let state: boolean
   

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Weekdays } from '../types'
+  import type { Weekdays } from '../../types'
 
   export let weekdays: Weekdays
   const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']

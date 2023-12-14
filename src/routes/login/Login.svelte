@@ -1,6 +1,6 @@
 <script lang="ts">
-  import TextInput from '../components/TextInput.svelte'
-  import { login } from '../stores/appStore'
+  import TextInput from '../../components/inputs/TextInput.svelte'
+  import { login } from '../../stores/appStore'
 
   let email = ''
   let password = ''

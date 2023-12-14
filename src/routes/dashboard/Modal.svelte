@@ -1,10 +1,10 @@
 <script lang="ts">
-  import TextInput from './TextInput.svelte'
-  import Select from './Select.svelte'
+  import TextInput from '../../components/inputs/TextInput.svelte'
+  import Select from '../../components/selects/Select.svelte'
   import { createEventDispatcher } from 'svelte'
   import { fade, fly } from 'svelte/transition'
-  import { DeviceType, MessageType, type DeviceInfo } from '../types'
-  import { sendMessage, updateDevices } from '../stores/database'
+  import { DeviceType, MessageType, type DeviceInfo } from '../../types'
+  import { sendMessage, updateDevices } from '../../stores/database'
 
 export let id: string
   export let info: DeviceInfo

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { options as o } from '../stores/optionStore'
+  import { options as o } from '../../stores/optionStore'
   export let type: string
 
   let active: boolean = false
