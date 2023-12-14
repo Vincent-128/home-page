@@ -3,7 +3,7 @@
   import MultiSelect from './MultiSelect.svelte'
   import TextInput from './TextInput.svelte'
   import Toggle from './Toggle.svelte'
-  import Condition from './Condition.svelte'
+  import Condition from './conditions/index.svelte'
   import AddButton from './AddButton.svelte'
   import RemoveButton from './RemoveButton.svelte'
   import { getEntryStore } from '../stores/entryStore.js'

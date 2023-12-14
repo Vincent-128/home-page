@@ -1,19 +1,28 @@
-export const clickAway = (node: Node) => {
-  const handleClick = (event: any) => {
-    if (!node.contains(event.target)) {
-      event.stopPropagation();
-      node.dispatchEvent(new CustomEvent('outclick'));
+import { listen } from "svelte/internal";
+import type { ActionReturn } from "svelte/action";
+
+interface Attributes {
+  "on:outclick"?: (e: CustomEvent<void>) => void;
+}
+
+type Callback = () => unknown
+
+export const clickAway = (node: HTMLElement, callback?: Callback): ActionReturn<{}, Attributes> =>{
+  const handleClick = (event: Event) => {
+    if (event.target !== null && !node.contains(event.target as Node)) {
+      node.dispatchEvent(new CustomEvent("outclick"));
+      callback?.();
     }
   };
 
-  document.addEventListener('click', handleClick, true);
+  const stop = listen(document, "click", handleClick, true);
 
   return {
     destroy() {
-      document.removeEventListener('click', handleClick, true);
+      stop();
     },
   };
-};
+}
 
 export let getId = (() => {
   let defaultSize = 12
