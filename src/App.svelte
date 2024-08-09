@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Automations from './components/automations/Automations.svelte'
-  import Dashboard from './routes/dashboard/Dashboard.svelte'
-  import Login from './routes/login/Login.svelte'
   import { loggedIn, page } from './stores/appStore'
+  import Automations from './pages/Automations.svelte'
+  import Dashboard from './pages/Dashboard.svelte'
   import Sidebar from './components/Sidebar.svelte'
+  import Login from './pages/Login.svelte'
 </script>
 
 <div class="container">
@@ -31,5 +31,6 @@
   main {
     height: 100vh;
     overflow-y: auto;
+    padding: 0 20px;
   }
 </style>

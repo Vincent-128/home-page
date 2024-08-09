@@ -1,24 +1,25 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { options as o } from '../../stores/optionStore'
-  export let type: string
+  import { getOptions, type OptionTypes } from '../../stores/optionStore'
+  export let type: OptionTypes
 
   let active: boolean = false
   let container: HTMLDivElement
+  let options: [number, string][]
 
-  let options: { [id: string]: string }
-  const unsubscribe = o.subscribe(value => (options = value[type]))
-  onDestroy(unsubscribe)
+  const unsubscribe = getOptions(type).subscribe(o => (options = o as [number, string][]))
 
   const dispatch = createEventDispatcher()
   const hover = (state: boolean) => () => (active = state)
-  const click = (value: string) => () => dispatch('click', parseInt(value))
+  const click = (value: number) => () => dispatch('click', value)
+
+  onDestroy(unsubscribe)
 </script>
 
 <div class:active class="container" bind:this={container} style="width: {active ? container.scrollWidth - 6 : 24}px" on:mouseenter={hover(true)} on:mouseleave={hover(false)}>
   <div class="plus" class:active>+</div>
-  {#each Object.entries(options) as [value, text] (value)}
-    <button class="option" class:active on:click={click(value)}>{text}</button>
+  {#each options as [id, text] (id)}
+    <button class="option" class:active on:click={click(id)}>{text}</button>
   {/each}
 </div>
 

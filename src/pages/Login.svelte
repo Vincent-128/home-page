@@ -1,13 +1,11 @@
 <script lang="ts">
-  import TextInput from '../../components/inputs/TextInput.svelte'
-  import { login } from '../../stores/appStore'
+  import TextInput from '../components/inputs/TextInput.svelte'
 
   let email = ''
   let password = ''
 
   const onSubmit = (e: any) => {
     e.preventDefault()
-    login(email, password)
   }
 </script>
 

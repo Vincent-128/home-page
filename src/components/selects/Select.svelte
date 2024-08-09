@@ -1,47 +1,40 @@
 <script lang="ts">
-  import InputContainer from "../inputs/InputContainer.svelte";
-  import { options as o, type Options as test } from "../../stores/optionStore";
-  import { createEventDispatcher, onDestroy } from "svelte";
-  import Options from "./Options.svelte";
+  import { getOptions, type OptionTypes } from '../../stores/optionStore'
+  import { createEventDispatcher, onDestroy } from 'svelte'
+  import InputContainer from '../inputs/InputContainer.svelte'
+  import Options from './Options.svelte'
 
-  export let label: string;
-  export let type: keyof test;
-  export let selected: number | string;
+  type ID = $$Generic<string | number>
 
-  let active = false;
-  let showOptions = false;
-  let options: [string | number, string][];
+  export let label: string
+  export let type: OptionTypes
+  export let selected: ID
 
-  const dispatch = createEventDispatcher();
-  const unsubscribe = o.subscribe((value) => (options = value[type]));
-  onDestroy(unsubscribe);
+  let active = false
+  let showOptions = false
+  let options: [ID, string][]
 
+  const dispatch = createEventDispatcher<{ select: ID }>()
+  const unsubscribe = getOptions(type).subscribe(o => (options = o as [ID, string][]))
 
-  const onSelect = (e: CustomEvent) => {
-    dispatch("select", e.detail);
-    showOptions = false;
-  };
+  const onClick = () => (showOptions = true)
+  const onOutClick = () => (showOptions = false)
 
-  const onOutClick = () => {
-    showOptions = false;
-  };
+  const onSelect = (e: CustomEvent<ID>) => {
+    dispatch('select', e.detail)
+    selected = e.detail
+    showOptions = false
+  }
 
-  const onClick = () => {
-    showOptions = true;
-  };
+  $: text = options.find(o => o[0] === selected)?.[1] || ''
+  $: active = showOptions || text !== ''
 
-  $: text = options[selected] || "";
-  $: active = showOptions || text !== "";
+  onDestroy(unsubscribe)
 </script>
 
 <InputContainer {active} {label} on:click={onClick}>
   <div class="text">{text}</div>
-  <Options
-    {showOptions}
-    selected={[selected]}
-    on:select={onSelect}
-    on:outclick={onOutClick}
-  />
+  <Options {options} {showOptions} selected={[selected]} on:select={onSelect} on:outclick={onOutClick} />
 </InputContainer>
 
 <style>

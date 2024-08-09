@@ -6,8 +6,7 @@
   export let off: string
   export let state: boolean
 
-
-  const handleClick = () => state = !state
+  const handleClick = () => (state = !state)
 </script>
 
 <InputContainer active={true} {label} on:click={handleClick}>

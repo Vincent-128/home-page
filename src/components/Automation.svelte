@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Entry from './Entry.svelte'
-  import Weekdays from '../inputs/Weekdays.svelte'
-  import Trigger from './Trigger.svelte'
-  import { getAutomationStore } from '../../stores/automationStore.js'
+  import Entry from './entries/Entry.svelte'
+  import Weekdays from './entries/Weekdays.svelte';
+  import Trigger from './entries/Trigger.svelte'
+  import { getAutomationStore } from '../stores/automationStore.js'
   export let id: string
 
   const automation = getAutomationStore(id)

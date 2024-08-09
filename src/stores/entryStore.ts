@@ -1,4 +1,4 @@
-import { EntryType, type DeviceEntry, type Entry, type IfElseEntry, type IfEntry, type WaitEntry, type WhileEntry, type Entries, ConditionType } from '../types'
+import { type Entry, type Entries, EntryType, ConditionType } from '../types/automation.types'
 import { getId } from '../utils'
 
 const subscriptions: { [id: string]: (entry: Entry) => void } = {}

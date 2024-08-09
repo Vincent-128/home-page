@@ -28,11 +28,11 @@
   --tertiary5: var(--tertiary35);
 
   --variant0: var(--variant10);
-  --variant0: var(--variant20);
-  --variant0: var(--variant25);
-  --variant0: var(--variant30);
-  --variant0: var(--variant35);
-  --variant0: var(--variant40);
+  --variant1: var(--variant20);
+  --variant2: var(--variant25);
+  --variant3: var(--variant30);
+  --variant4: var(--variant35);
+  --variant5: var(--variant40);
 
   --error0: var(--error80);
   --error1: var(--error70);

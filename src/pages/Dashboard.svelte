@@ -1,15 +1,14 @@
 <script lang="ts">
-  import DeviceCard from './DeviceCard.svelte'
-    import { layout } from '../../stores/appStore'
-
+  import DeviceCard from '../components/DeviceCard.svelte'
+  import { layout } from '../stores/appStore'
+  
 </script>
 
 <div class="dashboard">
-  {#each $layout as id, i (id)}
+  {#each $layout as id (id)}
     <DeviceCard {id} />
   {/each}
 </div>
-
 
 <style>
   .dashboard {

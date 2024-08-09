@@ -1,7 +1,6 @@
 <script lang="ts">
   export let active: boolean
   export let label: string
-
 </script>
 
 <button class="container" type="button" class:active on:click>

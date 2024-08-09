@@ -1,44 +1,39 @@
 <script lang="ts">
+  import { getDeviceStore } from '../stores/deviceStore'
+  import type { Device } from '../types/device.types'
+  import { onDestroy } from 'svelte'
+  import DeviceModal from './DeviceModal.svelte'
   import Icon from './Icon.svelte'
-  import Modal from './Modal.svelte'
-  import { sendMessage } from '../../stores/database'
-  import { getDeviceStore, isControllable } from '../../stores/deviceStore'
-  import { MessageType } from '../../types'
 
   export let id: string
-  
-  let showModal = false
-  const store = getDeviceStore(id)
 
-  const primaryClick = () => {
-    if (isControllable($store.type)) {
-      sendMessage({ event: MessageType.Toggle, id })
-    }
-  }
+  let device: Device
+  let showModal = false
+
+  const unsubscribe = getDeviceStore(id).subscribe(value => (device = value))
+
+  const primaryClick = () => console.log('primaryClick')
 
   const secondaryClick = () => (showModal = true)
+
+  onDestroy(unsubscribe)
 </script>
 
-<button
-  class="container"
-  class:state={$store.state}
-  on:click={primaryClick}
-  on:dragstart
-  on:dragenter
-  on:dragleave
->
+<button class="container" class:state={device.state} on:click={primaryClick}>
   <button class="circle" on:click|stopPropagation={secondaryClick}>
-    <Icon icon={$store.icon} state={$store.state} />
+    <Icon icon={device.icon} state={device.state} />
   </button>
   <div class="text">
-    <span>{$store.room}</span><br /><span>{$store.name}</span>
+    <span>{device.room}</span>
     <br />
-    <span class="state">{$store.text}</span>
+    <span>{device.name}</span>
+    <br />
+    <span class="state">{device.text}</span>
   </div>
 </button>
 
 {#if showModal}
-  <Modal {id} info={$store} on:close={() => (showModal = false)} />
+  <DeviceModal {id} on:close={() => (showModal = false)} />
 {/if}
 
 <style>

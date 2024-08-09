@@ -1,7 +1,7 @@
+import { type Automation, type Automations, TriggerType } from '../types/automation.types'
 import { derived, get, writable, type Writable } from 'svelte/store'
-import { TriggerType, type Automation, type Automations } from '../types'
-import { getId } from '../utils'
 import { addEntry, removeEntry } from './entryStore'
+import { getId } from '../utils'
 
 interface WritableAutomation extends Writable<Automation> {
   remove: () => void
